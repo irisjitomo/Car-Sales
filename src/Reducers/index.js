@@ -15,13 +15,30 @@ const intialState = {
 	]
 };
 
-const reducer = (state = intialState, action) => {
+export const reducer = (state = intialState, action) => {
+    console.log('action', action)
     switch(action.type) {
-        case 'ADD_ITEM':
-            return state;
+        case 'BUY_ITEM':
+            return {
+                ...state,
+                car: {
+                    ...state.car,
+                    price: state.car.price + action.payload.price,
+                    features : [...state.car.features, action.payload]
+                }
+            };
+        case 'REMOVE_FEATURE':
+            return {
+                ...state,
+                car: {
+                    ...state.car,
+                    price: state.car.price - action.payload.price,
+                    features : state.car.features.filter(feature => (feature.id !== action.payload.id))
+                }
+            }
         default:
             return state;
     }
 };
 
-export default reducer
+// export default reducer
